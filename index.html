@@ -89,16 +89,7 @@
  <script src="dist/yate.bundled.min.js"></script>
 <script src="doc/doc.min.js"></script>
 <script type="text/javascript">
-  var yate = YATE(document.getElementById("showcase"), {
-    sparql: {
-      showQueryButton: true, 
-      callbacks:{
-        success: function(data){
-          console.log("success", data);
-        }
-      }
-    }
-  });
+  var yate = YATE(document.getElementById("showcase"));
 </script>
   </body>
 </html>

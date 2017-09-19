@@ -77,7 +77,6 @@ var extendCmInstance = function(yate) {
       if (root.Autocompleters[name]) yate.autocompleters.init(name, root.Autocompleters[name]);
     });
   }
-  yate.lastQueryDuration = null;
   yate.getCompleteToken = function(token, cur) {
     return require("./tokenUtils.js").getCompleteToken(yate, token, cur);
   };
@@ -123,31 +122,19 @@ var extendCmInstance = function(yate) {
       }
     }
   };
-  /**
-	 * Execute query. Pass a callback function, or a configuration object (see
-	 * default settings below for possible values) I.e., you can change the
-	 * query configuration by either changing the default settings, changing the
-	 * settings of this document, or by passing query settings to this function
-	 *
-	 * @method doc.query
-	 * @param function|object
-	 */
-  yate.query = function(callbackOrConfig) {
-    root.executeQuery(yate, callbackOrConfig);
-  };
 
   yate.getUrlArguments = function(config) {
     return root.getUrlArguments(yate, config);
   };
 
   /**
-	 * Fetch defined prefixes from query string
+	 * Fetch defined prefixes from document string
 	 *
-	 * @method doc.getPrefixesFromQuery
+	 * @method doc.getPrefixesFromDocument
 	 * @return object
 	 */
-  yate.getPrefixesFromQuery = function() {
-    return require("./prefixUtils.js").getPrefixesFromQuery(yate);
+  yate.getPrefixesFromDocument = function() {
+    return require("./prefixUtils.js").getPrefixesFromDocument(yate);
   };
 
   yate.addPrefixes = function(prefixes) {
@@ -158,48 +145,13 @@ var extendCmInstance = function(yate) {
   };
 
   yate.getValueWithoutComments = function() {
-    var cleanedQuery = "";
+    var cleanedDocument = "";
     root.runMode(yate.getValue(), "rdf11turtle", function(stringVal, className) {
       if (className != "comment") {
-        cleanedQuery += stringVal;
+        cleanedDocument += stringVal;
       }
     });
-    return cleanedQuery;
-  };
-  /**
-	 * Fetch the query type (e.g., SELECT||DESCRIBE||INSERT||DELETE||ASK||CONSTRUCT)
-	 *
-	 * @method doc.getQueryType
-	 * @return string
-	 *
-	 */
-  yate.getQueryType = function() {
-    return yate.queryType;
-  };
-  /**
-	 * Fetch the query mode: 'query' or 'update'
-	 *
-	 * @method doc.getQueryMode
-	 * @return string
-	 *
-	 */
-  yate.getQueryMode = function() {
-    var type = yate.getQueryType();
-    if (
-      type == "INSERT" ||
-      type == "DELETE" ||
-      type == "LOAD" ||
-      type == "CLEAR" ||
-      type == "CREATE" ||
-      type == "DROP" ||
-      type == "COPY" ||
-      type == "MOVE" ||
-      type == "ADD"
-    ) {
-      return "update";
-    } else {
-      return "query";
-    }
+    return cleanedDocument;
   };
 
   yate.setCheckSyntaxErrors = function(isEnabled) {
@@ -246,25 +198,23 @@ var postProcessCmElement = function(yate) {
 	 * Add event handlers
 	 */
   yate.on("blur", function(yate, eventInfo) {
-    root.storeQuery(yate);
+    root.storeDoc(yate);
   });
   yate.on("change", function(yate, eventInfo) {
     checkSyntax(yate);
-    root.updateQueryButton(yate);
     root.positionButtons(yate);
   });
   yate.on("changes", function() {
     //e.g. on paste
     checkSyntax(yate);
-    root.updateQueryButton(yate);
     root.positionButtons(yate);
   });
 
   yate.on("cursorActivity", function(yate, eventInfo) {
     updateButtonsTransparency(yate);
   });
-  yate.prevQueryValid = false;
-  checkSyntax(yate); // on first load, check as well (our stored or default query might be incorrect)
+  yate.prevDocValid = false;
+  checkSyntax(yate); // on first load, check as well (our stored or default document might be incorrect)
   root.positionButtons(yate);
 
   $(yate.getWrapperElement())
@@ -294,7 +244,7 @@ var postProcessCmElement = function(yate) {
 };
 
 /**
- * get url params. first try fetching using hash. If it fails, try the regular query parameters (for backwards compatability)
+ * get url params. first try fetching using hash. If it fails, try the regular doc parameters (for backwards compatability)
  */
 var getUrlParams = function() {
   //first try hash
@@ -304,7 +254,7 @@ var getUrlParams = function() {
     //Don't want this. So simply get the hash string ourselves
     urlParams = $.deparam(location.href.split("#")[1]);
   }
-  if ((!urlParams || !("query" in urlParams)) && window.location.search.length > 1) {
+  if ((!urlParams || !("doc" in urlParams)) && window.location.search.length > 1) {
     //ok, then just try regular url params
     urlParams = $.deparam(window.location.search.substring(1));
   }
@@ -328,14 +278,14 @@ var updateButtonsTransparency = function(yate) {
 
 var clearError = null;
 var checkSyntax = function(yate, deepcheck) {
-  yate.queryValid = true;
+  yate.docValid = true;
 
   yate.clearGutter("gutterErrorBar");
 
   var state = null;
   for (var l = 0; l < yate.lineCount(); ++l) {
     var precise = false;
-    if (!yate.prevQueryValid) {
+    if (!yate.prevDocValid) {
       // we don't want cached information in this case, otherwise the
       // previous error sign might still show up,
       // even though the syntax error might be gone already
@@ -350,7 +300,6 @@ var checkSyntax = function(yate, deepcheck) {
       precise
     );
     var state = token.state;
-    yate.queryType = state.queryType;
     if (state.OK == false) {
       if (!yate.options.syntaxErrorCheck) {
         //the library we use already marks everything as being an error. Overwrite this class attribute.
@@ -381,21 +330,21 @@ var checkSyntax = function(yate, deepcheck) {
       warningEl.className = "parseErrorIcon";
       yate.setGutterMarker(l, "gutterErrorBar", warningEl);
 
-      yate.queryValid = false;
+      yate.docValid = false;
       break;
     }
   }
-  yate.prevQueryValid = yate.queryValid;
+  yate.prevDocValid = yate.docValid;
   if (deepcheck) {
     if (state != null && state.stack != undefined) {
       var stack = state.stack, len = state.stack.length;
       // Because incremental parser doesn't receive end-of-input
       // it can't clear stack, so we have to check that whatever
       // is left on the stack is nillable
-      if (len > 1) yate.queryValid = false;
+      if (len > 1) yate.docValid = false;
       else if (len == 1) {
         if (stack[0] != "solutionModifier" && stack[0] != "?limitOffsetClauses" && stack[0] != "?offsetClause")
-          yate.queryValid = false;
+          yate.docValid = false;
       }
     }
   }
@@ -436,30 +385,26 @@ root.positionButtons = function(yate) {
  * Create a share link
  *
  * @method YATE.createShareLink
- * @param {doc} YATE document
- * @default {query: doc.getValue()}
+ * @param {yate} YATE document
+ * @default {doc: doc.getValue()}
  * @return object
  */
 root.createShareLink = function(yate) {
   //extend existing link, so first fetch current arguments
   var urlParams = {};
   if (window.location.hash.length > 1) urlParams = $.deparam(window.location.hash.substring(1));
-  urlParams["query"] = yate.getValue();
+  urlParams["doc"] = yate.getValue();
   return urlParams;
-};
-root.getAsCurl = function(yate, ajaxConfig) {
-  var curl = require("./curl.js");
-  return curl.createCurlString(yate, ajaxConfig);
 };
 /**
  * Consume the share link, by parsing the document URL for possible yate arguments, and setting the appropriate values in the YATE doc
  *
  * @method YATE.consumeShareLink
- * @param {doc} YATE document
+ * @param {yate} YATE document
  */
 root.consumeShareLink = function(yate, urlParams) {
-  if (urlParams && urlParams.query) {
-    yate.setValue(urlParams.query);
+  if (urlParams && urlParams.doc) {
+    yate.setValue(urlParams.doc);
   }
 };
 root.drawButtons = function(yate) {
@@ -521,13 +466,6 @@ root.drawButtons = function(yate) {
             })
             .appendTo(popup);
         }
-        $("<button>CURL</button>")
-          .addClass("yate_btn yate_btn-sm yate_btn-primary")
-          .click(function() {
-            $(this).parent().find("button").attr("disabled", "disabled");
-            $input.val(root.getAsCurl(yate)).focus();
-          })
-          .appendTo(popup);
         var positions = svgShare.position();
         popup
           .css("top", positions.top + svgShare.outerHeight() + parseInt(popup.css("padding-top")) + "px")
@@ -535,7 +473,7 @@ root.drawButtons = function(yate) {
         $input.focus();
       })
       .addClass("yate_share")
-      .attr("title", "Share your query")
+      .attr("title", "Share your document")
       .appendTo(yate.buttons);
   }
 
@@ -564,70 +502,8 @@ root.drawButtons = function(yate) {
     );
   yate.buttons.append(toggleFullscreen);
 
-  if (yate.options.sparql.showQueryButton) {
-    $("<div>", {
-      class: "yate_queryButton"
-    })
-      .click(function() {
-        if ($(this).hasClass("query_busy")) {
-          if (yate.xhr) yate.xhr.abort();
-          root.updateQueryButton(yate);
-        } else {
-          yate.query();
-        }
-      })
-      .appendTo(yate.buttons);
-    root.updateQueryButton(yate);
-  }
 };
 
-var queryButtonIds = {
-  busy: "loader",
-  valid: "query",
-  error: "queryInvalid"
-};
-
-/**
- * Update the query button depending on current query status. If no query status is passed via the parameter, it auto-detects the current query status
- *
- * @param {doc} YATE document
- * @param status {string|null, "busy"|"valid"|"error"}
- */
-root.updateQueryButton = function(yate, status) {
-  var queryButton = $(yate.getWrapperElement()).find(".yate_queryButton");
-  if (queryButton.length == 0) return; //no query button drawn
-
-  //detect status
-  if (!status) {
-    status = "valid";
-    if (yate.queryValid === false) status = "error";
-  }
-
-  if (status != yate.queryStatus) {
-    queryButton.empty().removeClass(function(index, classNames) {
-      return classNames
-        .split(" ")
-        .filter(function(c) {
-          //remove classname from previous status
-          return c.indexOf("query_") == 0;
-        })
-        .join(" ");
-    });
-
-    if (status == "busy") {
-      queryButton.append(
-        $("<div>", {
-          class: "loader"
-        })
-      );
-      yate.queryStatus = status;
-    } else if (status == "valid" || status == "error") {
-      queryButton.addClass("query_" + status);
-      yutils.svg.draw(queryButton, imgs[queryButtonIds[status]]);
-      yate.queryStatus = status;
-    }
-  }
-};
 /**
  * Initialize YATE from an existing text area (see http://codemirror.net/doc/manual.html#fromTextArea for more info)
  *
@@ -650,7 +526,7 @@ root.fromTextArea = function(textAreaEl, config) {
   return yate;
 };
 
-root.storeQuery = function(yate) {
+root.storeDoc = function(yate) {
   var storageId = utils.getPersistencyId(yate, yate.options.persistent);
   if (storageId) {
     yutils.storage.set(storageId, yate.getValue(), "month", yate.options.onQuotaExceeded);
@@ -781,7 +657,7 @@ var autoFormatLineBreaks = function(text, start, end) {
     }
     return 0;
   };
-  var formattedQuery = "";
+  var formattedDoc = "";
   var currentLine = "";
   var stackTrace = [];
   CodeMirror.runMode(text, "rdf11turtle", function(stringVal, type) {
@@ -789,24 +665,24 @@ var autoFormatLineBreaks = function(text, start, end) {
     var breakType = getBreakType(stringVal, type);
     if (breakType != 0) {
       if (breakType == 1) {
-        formattedQuery += stringVal + "\n";
+        formattedDoc += stringVal + "\n";
         currentLine = "";
       } else {
         // (-1)
-        formattedQuery += "\n" + stringVal;
+        formattedDoc += "\n" + stringVal;
         currentLine = stringVal;
       }
       stackTrace = [];
     } else {
       currentLine += stringVal;
-      formattedQuery += stringVal;
+      formattedDoc += stringVal;
     }
     if (stackTrace.length == 1 && stackTrace[0] == "sp-ws") stackTrace = [];
   });
-  return $.trim(formattedQuery.replace(/\n\s*\n/g, "\n"));
+  return $.trim(formattedDoc.replace(/\n\s*\n/g, "\n"));
 };
 
-require("./sparql.js"), require("./defaults.js");
+require("./defaults.js");
 root.$ = $;
 root.version = {
   CodeMirror: CodeMirror.version,

@@ -436,25 +436,6 @@
           margin-left: 5px; }
         .yate .yate_buttons div.yate_sharePopup textarea {
           width: 100%; }
-    .yate .yate_buttons .yate_queryButton {
-      display: inline-block;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      margin-left: 10px; }
-      .yate .yate_buttons .yate_queryButton div {
-        margin-left: 0px; }
-      .yate .yate_buttons .yate_queryButton .svgImg {
-        display: block; }
-      .yate .yate_buttons .yate_queryButton .loader {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        box-sizing: border-box;
-        border: solid 4px rgba(0, 0, 0, 0.2);
-        border-top-color: #000;
-        -webkit-animation: spin 1s infinite linear;
-                animation: spin 1s infinite linear; }
   .yate .fullscreenToggleBtns {
     display: inline-block;
     margin-top: 3px; }

@@ -19,7 +19,7 @@ module.exports = function(yate) {
       $(yate.getWrapperElement()).find(".cm-atom").each(function() {
         var variable = this.innerHTML;
         if (variable.indexOf("?") == 0) {
-          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when query is not syntactically valid)
+          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when document is not syntactically valid)
           var nextEl = $(this).next();
           var nextElClass = nextEl.attr("class");
           if (nextElClass && nextEl.attr("class").indexOf("cm-atom") >= 0) {

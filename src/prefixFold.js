@@ -30,7 +30,7 @@ function findFirstPrefix(cm, line, ch, lineText) {
     var tokenType = cm.getTokenTypeAt(CodeMirror.Pos(line, found + 1));
     if (!/^(comment|string)/.test(tokenType)) return found + 1;
     at = found - 1;
-    //Could not find a prefix, no use looping any further. Probably invalid query
+    //Could not find a prefix, no use looping any further. Probably invalid document
     if (at === pass) break;
   }
 }

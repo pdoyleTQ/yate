@@ -1,12 +1,12 @@
 "use strict";
 /**
- * Append prefix declaration to list of prefixes in query window.
+ * Append prefix declaration to list of prefixes in document window.
  *
  * @param yate
  * @param prefix
  */
 var addPrefixes = function(yate, prefixes) {
-  var existingPrefixes = yate.getPrefixesFromQuery();
+  var existingPrefixes = yate.getPrefixesFromDocument();
   //for backwards compatability, we stil support prefixes value as string (e.g. 'rdf: <http://fbfgfgf>'
   if (typeof prefixes == "string") {
     addPrefixAsString(yate, prefixes);
@@ -59,14 +59,14 @@ var removePrefixes = function(yate, prefixes) {
 };
 
 /**
- * Get defined prefixes from query as array, in format {"prefix:" "uri"}
+ * Get defined prefixes from document as array, in format {"prefix:" "uri"}
  *
  * @param cm
  * @returns {Array}
  */
-var getPrefixesFromQuery = function(yate) {
+var getPrefixesFromDocument = function(yate) {
   //Use precise here. We want to be sure we use the most up to date state. If we're
-  //not, we might get outdated prefixes from the current query (creating loops such
+  //not, we might get outdated prefixes from the current document (creating loops such
   //as https://github.com/OpenTriply/YASGUI/issues/84)
   return yate.getTokenAt({ line: yate.lastLine(), ch: yate.getLine(yate.lastLine()).length }, true).state.prefixes;
 };
@@ -94,6 +94,6 @@ var getIndentFromLine = function(yate, line, charNumber) {
 
 module.exports = {
   addPrefixes: addPrefixes,
-  getPrefixesFromQuery: getPrefixesFromQuery,
+  getPrefixesFromDocument: getPrefixesFromDocument,
   removePrefixes: removePrefixes
 };

@@ -1,4 +1,3 @@
-@import "variables.scss";
 @import "mixins.scss";
 .yate_btn {
   color: #333;
@@ -105,22 +104,6 @@
 				textarea {
 					width: 100%;
 				}
-			}
-		}
-		.yate_queryButton {
-			display:inline-block;
-			cursor: pointer;
-			width: $queryButtonWidth;
-			height: $queryButtonHeight;
-			div {
-				margin-left: 0px;
-			}
-			margin-left: 10px;
-			.svgImg {
-				display:block;
-			}
-			.loader {
-			  @include spinner($queryButtonWidth, $queryButtonHeight);
 			}
 		}
 	}

@@ -109,8 +109,8 @@ module.exports.appendPrefixIfNeeded = function(yate, completerName) {
         // check whether it isnt defined already (saves us from looping
         // through the array)
         var currentPrefix = token.string.substring(0, colonIndex + 1);
-        var queryPrefixes = yate.getPrefixesFromQuery();
-        if (queryPrefixes[currentPrefix.slice(0, -1)] == null) {
+        var docPrefixes = yate.getPrefixesFromDocument();
+        if (docPrefixes[currentPrefix.slice(0, -1)] == null) {
           // ok, so it isnt added yet!
           var completions = yate.autocompleters.getTrie(completerName).autoComplete(currentPrefix);
           if (completions.length > 0) {

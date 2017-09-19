@@ -9,21 +9,21 @@ var $ = require("jquery"), utils = require("./utils.js"), yutils = require("yasg
  * Stores additional info such as the used namespace and prefix in the token object
  */
 var preprocessResourceTokenForCompletion = function(yate, token) {
-  var queryPrefixes = yate.getPrefixesFromQuery();
+  var docPrefixes = yate.getPrefixesFromDocument();
   if (!token.string.indexOf("<") == 0) {
     token.tokenPrefix = token.string.substring(0, token.string.indexOf(":") + 1);
 
-    if (queryPrefixes[token.tokenPrefix.slice(0, -1)] != null) {
-      token.tokenPrefixUri = queryPrefixes[token.tokenPrefix.slice(0, -1)];
+    if (docPrefixes[token.tokenPrefix.slice(0, -1)] != null) {
+      token.tokenPrefixUri = docPrefixes[token.tokenPrefix.slice(0, -1)];
     }
   }
 
   token.autocompletionString = token.string.trim();
   if (!token.string.indexOf("<") == 0 && token.string.indexOf(":") > -1) {
     // hmm, the token is prefixed. We still need the complete uri for autocompletions. generate this!
-    for (var prefix in queryPrefixes) {
+    for (var prefix in docPrefixes) {
       if (token.tokenPrefix === prefix + ":") {
-        token.autocompletionString = queryPrefixes[prefix];
+        token.autocompletionString = docPrefixes[prefix];
         token.autocompletionString += token.string.substring(prefix.length + 1);
         break;
       }
