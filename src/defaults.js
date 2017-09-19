@@ -6,11 +6,11 @@
  */
 var $ = require("jquery"), YASQE = require("./main.js");
 YASQE.defaults = $.extend(true, {}, YASQE.defaults, {
-  mode: "sparql11",
+  mode: "rdf11turtle",
   /**
 	 * Query string
 	 */
-  value: "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT * WHERE {\n  ?sub ?pred ?obj .\n} \nLIMIT 10",
+  value: "# EXAMPLE 19\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix dc: <http://purl.org/dc/elements/1.1/> .\n@prefix ex: <http://example.org/stuff/1.0/> .\n\n<http://www.w3.org/TR/rdf-syntax-grammar>\n  dc:title \"RDF/XML Syntax Specification (Revised)\" ;\n  ex:editor [\n    ex:fullname \"Dave Beckett\";\n    ex:homePage <http://purl.org/net/dajobe/>\n  ] .\n\n# EXAMPLE 20\nPREFIX : <http://example.org/stuff/1.0/>\n:a :b ( \"apple\" \"banana\" ) .\n\n# EXAMPLE 21\n@prefix : <http://example.org/stuff/1.0/> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n:a :b\n  [ rdf:first \"apple\";\n    rdf:rest [ rdf:first \"banana\";\n               rdf:rest rdf:nil ]\n  ] .\n\n# EXAMPLE 22\n@prefix : <http://example.org/stuff/1.0/> .\n\n:a :b \"The first line\nThe second line\n  more\" .\n\n:a :b \"\"\"The first line\nThe second line\n  more\"\"\" .\n\n# EXAMPLE 23\n@prefix : <http://example.org/stuff/1.0/> .\n(1 2.0 3E1) :p \"w\" .\n\n# EXAMPLE 24\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n    _:b0  rdf:first  1 ;\n          rdf:rest   _:b1 .\n    _:b1  rdf:first  2.0 ;\n          rdf:rest   _:b2 .\n    _:b2  rdf:first  3E1 ;\n          rdf:rest   rdf:nil .\n    _:b0  :p         \"w\" . \n\n# EXAMPLE 25\nPREFIX : <http://example.org/stuff/1.0/>\n(1 [:p :q] ( 2 ) ) :p2 :q2 .\n\n# EXAMPLE 26\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n    _:b0  rdf:first  1 ;\n          rdf:rest   _:b1 .\n    _:b1  rdf:first  _:b2 .\n    _:b2  :p         :q .\n    _:b1  rdf:rest   _:b3 .\n    _:b3  rdf:first  _:b4 .\n    _:b4  rdf:first  2 ;\n          rdf:rest   rdf:nil .\n    _:b3  rdf:rest   rdf:nil .\n    ",
   highlightSelectionMatches: {
     showToken: /\w/
   },

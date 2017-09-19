@@ -159,7 +159,7 @@ var extendCmInstance = function(yasqe) {
 
   yasqe.getValueWithoutComments = function() {
     var cleanedQuery = "";
-    root.runMode(yasqe.getValue(), "sparql11", function(stringVal, className) {
+    root.runMode(yasqe.getValue(), "rdf11turtle", function(stringVal, className) {
       if (className != "comment") {
         cleanedQuery += stringVal;
       }
@@ -784,7 +784,7 @@ var autoFormatLineBreaks = function(text, start, end) {
   var formattedQuery = "";
   var currentLine = "";
   var stackTrace = [];
-  CodeMirror.runMode(text, "sparql11", function(stringVal, type) {
+  CodeMirror.runMode(text, "rdf11turtle", function(stringVal, type) {
     stackTrace.push(type);
     var breakType = getBreakType(stringVal, type);
     if (breakType != 0) {
