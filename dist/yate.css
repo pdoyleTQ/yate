@@ -1,4 +1,4 @@
-.yasqe {
+.yate {
   position: relative;
   /* BASICS */
   /* PADDING */
@@ -19,47 +19,47 @@
   /* Used to force a border model for a node */
   /* See issue #2901 */
   /* Help users use markselection to safely style text background */ }
-  .yasqe .CodeMirror {
+  .yate .CodeMirror {
     /* Set height, width, borders, and global font properties here */
     font-family: monospace;
     height: 300px;
     color: black; }
-  .yasqe .CodeMirror-lines {
+  .yate .CodeMirror-lines {
     padding: 4px 0;
     /* Vertical padding around content */ }
-  .yasqe .CodeMirror pre {
+  .yate .CodeMirror pre {
     padding: 0 4px;
     /* Horizontal padding of content */ }
-  .yasqe .CodeMirror-scrollbar-filler, .yasqe .CodeMirror-gutter-filler {
+  .yate .CodeMirror-scrollbar-filler, .yate .CodeMirror-gutter-filler {
     background-color: white;
     /* The little square between H and V scrollbars */ }
-  .yasqe .CodeMirror-gutters {
+  .yate .CodeMirror-gutters {
     border-right: 1px solid #ddd;
     background-color: #f7f7f7;
     white-space: nowrap; }
-  .yasqe .CodeMirror-linenumber {
+  .yate .CodeMirror-linenumber {
     padding: 0 3px 0 5px;
     min-width: 20px;
     text-align: right;
     color: #999;
     white-space: nowrap; }
-  .yasqe .CodeMirror-guttermarker {
+  .yate .CodeMirror-guttermarker {
     color: black; }
-  .yasqe .CodeMirror-guttermarker-subtle {
+  .yate .CodeMirror-guttermarker-subtle {
     color: #999; }
-  .yasqe .CodeMirror-cursor {
+  .yate .CodeMirror-cursor {
     border-left: 1px solid black;
     border-right: none;
     width: 0; }
-  .yasqe .CodeMirror div.CodeMirror-secondarycursor {
+  .yate .CodeMirror div.CodeMirror-secondarycursor {
     border-left: 1px solid silver; }
-  .yasqe .cm-fat-cursor .CodeMirror-cursor {
+  .yate .cm-fat-cursor .CodeMirror-cursor {
     width: auto;
     border: 0 !important;
     background: #7e7; }
-  .yasqe .cm-fat-cursor div.CodeMirror-cursors {
+  .yate .cm-fat-cursor div.CodeMirror-cursors {
     z-index: 1; }
-  .yasqe .cm-animate-fat-cursor {
+  .yate .cm-animate-fat-cursor {
     width: auto;
     border: 0;
     -webkit-animation: blink 1.06s steps(1) infinite;
@@ -77,90 +77,90 @@
   50% {
     background-color: transparent; }
   100% { } }
-  .yasqe .cm-tab {
+  .yate .cm-tab {
     display: inline-block;
     text-decoration: inherit; }
-  .yasqe .CodeMirror-rulers {
+  .yate .CodeMirror-rulers {
     position: absolute;
     left: 0;
     right: 0;
     top: -50px;
     bottom: -20px;
     overflow: hidden; }
-  .yasqe .CodeMirror-ruler {
+  .yate .CodeMirror-ruler {
     border-left: 1px solid #ccc;
     top: 0;
     bottom: 0;
     position: absolute; }
-  .yasqe .cm-s-default .cm-header {
+  .yate .cm-s-default .cm-header {
     color: blue; }
-  .yasqe .cm-s-default .cm-quote {
+  .yate .cm-s-default .cm-quote {
     color: #090; }
-  .yasqe .cm-negative {
+  .yate .cm-negative {
     color: #d44; }
-  .yasqe .cm-positive {
+  .yate .cm-positive {
     color: #292; }
-  .yasqe .cm-header, .yasqe .cm-strong {
+  .yate .cm-header, .yate .cm-strong {
     font-weight: bold; }
-  .yasqe .cm-em {
+  .yate .cm-em {
     font-style: italic; }
-  .yasqe .cm-link {
+  .yate .cm-link {
     text-decoration: underline; }
-  .yasqe .cm-strikethrough {
+  .yate .cm-strikethrough {
     text-decoration: line-through; }
-  .yasqe .cm-s-default .cm-keyword {
+  .yate .cm-s-default .cm-keyword {
     color: #708; }
-  .yasqe .cm-s-default .cm-atom {
+  .yate .cm-s-default .cm-atom {
     color: #219; }
-  .yasqe .cm-s-default .cm-number {
+  .yate .cm-s-default .cm-number {
     color: #164; }
-  .yasqe .cm-s-default .cm-def {
+  .yate .cm-s-default .cm-def {
     color: #00f; }
-  .yasqe .cm-s-default .cm-variable-2 {
+  .yate .cm-s-default .cm-variable-2 {
     color: #05a; }
-  .yasqe .cm-s-default .cm-variable-3 {
+  .yate .cm-s-default .cm-variable-3 {
     color: #085; }
-  .yasqe .cm-s-default .cm-comment {
+  .yate .cm-s-default .cm-comment {
     color: #a50; }
-  .yasqe .cm-s-default .cm-string {
+  .yate .cm-s-default .cm-string {
     color: #a11; }
-  .yasqe .cm-s-default .cm-string-2 {
+  .yate .cm-s-default .cm-string-2 {
     color: #f50; }
-  .yasqe .cm-s-default .cm-meta {
+  .yate .cm-s-default .cm-meta {
     color: #555; }
-  .yasqe .cm-s-default .cm-qualifier {
+  .yate .cm-s-default .cm-qualifier {
     color: #555; }
-  .yasqe .cm-s-default .cm-builtin {
+  .yate .cm-s-default .cm-builtin {
     color: #30a; }
-  .yasqe .cm-s-default .cm-bracket {
+  .yate .cm-s-default .cm-bracket {
     color: #997; }
-  .yasqe .cm-s-default .cm-tag {
+  .yate .cm-s-default .cm-tag {
     color: #170; }
-  .yasqe .cm-s-default .cm-attribute {
+  .yate .cm-s-default .cm-attribute {
     color: #00c; }
-  .yasqe .cm-s-default .cm-hr {
+  .yate .cm-s-default .cm-hr {
     color: #999; }
-  .yasqe .cm-s-default .cm-link {
+  .yate .cm-s-default .cm-link {
     color: #00c; }
-  .yasqe .cm-s-default .cm-error {
+  .yate .cm-s-default .cm-error {
     color: #f00; }
-  .yasqe .cm-invalidchar {
+  .yate .cm-invalidchar {
     color: #f00; }
-  .yasqe .CodeMirror-composing {
+  .yate .CodeMirror-composing {
     border-bottom: 2px solid; }
-  .yasqe div.CodeMirror span.CodeMirror-matchingbracket {
+  .yate div.CodeMirror span.CodeMirror-matchingbracket {
     color: #0f0; }
-  .yasqe div.CodeMirror span.CodeMirror-nonmatchingbracket {
+  .yate div.CodeMirror span.CodeMirror-nonmatchingbracket {
     color: #f22; }
-  .yasqe .CodeMirror-matchingtag {
+  .yate .CodeMirror-matchingtag {
     background: rgba(255, 150, 0, 0.3); }
-  .yasqe .CodeMirror-activeline-background {
+  .yate .CodeMirror-activeline-background {
     background: #e8f2ff; }
-  .yasqe .CodeMirror {
+  .yate .CodeMirror {
     position: relative;
     overflow: hidden;
     background: white; }
-  .yasqe .CodeMirror-scroll {
+  .yate .CodeMirror-scroll {
     overflow: scroll !important;
     /* Things will break if this is overridden */
     /* 30px is the magic margin used to hide the element's real scrollbars */
@@ -172,36 +172,36 @@
     outline: none;
     /* Prevent dragging from highlighting the element */
     position: relative; }
-  .yasqe .CodeMirror-sizer {
+  .yate .CodeMirror-sizer {
     position: relative;
     border-right: 30px solid transparent; }
-  .yasqe .CodeMirror-vscrollbar, .yasqe .CodeMirror-hscrollbar, .yasqe .CodeMirror-scrollbar-filler, .yasqe .CodeMirror-gutter-filler {
+  .yate .CodeMirror-vscrollbar, .yate .CodeMirror-hscrollbar, .yate .CodeMirror-scrollbar-filler, .yate .CodeMirror-gutter-filler {
     position: absolute;
     z-index: 6;
     display: none; }
-  .yasqe .CodeMirror-vscrollbar {
+  .yate .CodeMirror-vscrollbar {
     right: 0;
     top: 0;
     overflow-x: hidden;
     overflow-y: scroll; }
-  .yasqe .CodeMirror-hscrollbar {
+  .yate .CodeMirror-hscrollbar {
     bottom: 0;
     left: 0;
     overflow-y: hidden;
     overflow-x: scroll; }
-  .yasqe .CodeMirror-scrollbar-filler {
+  .yate .CodeMirror-scrollbar-filler {
     right: 0;
     bottom: 0; }
-  .yasqe .CodeMirror-gutter-filler {
+  .yate .CodeMirror-gutter-filler {
     left: 0;
     bottom: 0; }
-  .yasqe .CodeMirror-gutters {
+  .yate .CodeMirror-gutters {
     position: absolute;
     left: 0;
     top: 0;
     min-height: 100%;
     z-index: 3; }
-  .yasqe .CodeMirror-gutter {
+  .yate .CodeMirror-gutter {
     white-space: normal;
     height: 100%;
     display: inline-block;
@@ -210,28 +210,28 @@
     /* Hack to make IE7 behave */
     *zoom: 1;
     *display: inline; }
-  .yasqe .CodeMirror-gutter-wrapper {
+  .yate .CodeMirror-gutter-wrapper {
     position: absolute;
     z-index: 4;
     background: none !important;
     border: none !important; }
-  .yasqe .CodeMirror-gutter-background {
+  .yate .CodeMirror-gutter-background {
     position: absolute;
     top: 0;
     bottom: 0;
     z-index: 4; }
-  .yasqe .CodeMirror-gutter-elt {
+  .yate .CodeMirror-gutter-elt {
     position: absolute;
     cursor: default;
     z-index: 4; }
-  .yasqe .CodeMirror-gutter-wrapper {
+  .yate .CodeMirror-gutter-wrapper {
     -webkit-user-select: none;
     user-select: none; }
-  .yasqe .CodeMirror-lines {
+  .yate .CodeMirror-lines {
     cursor: text;
     min-height: 1px;
     /* prevents collapsing before first draw */ }
-  .yasqe .CodeMirror pre {
+  .yate .CodeMirror pre {
     /* Reset some styles that the rest of the page might have set */
     border-radius: 0;
     border-width: 0;
@@ -249,75 +249,75 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none; }
-  .yasqe .CodeMirror-wrap pre {
+  .yate .CodeMirror-wrap pre {
     word-wrap: break-word;
     white-space: pre-wrap;
     word-break: normal; }
-  .yasqe .CodeMirror-linebackground {
+  .yate .CodeMirror-linebackground {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     z-index: 0; }
-  .yasqe .CodeMirror-linewidget {
+  .yate .CodeMirror-linewidget {
     position: relative;
     z-index: 2;
     overflow: auto; }
-  .yasqe .CodeMirror-code {
+  .yate .CodeMirror-code {
     outline: none; }
-  .yasqe .CodeMirror-scroll,
-  .yasqe .CodeMirror-sizer,
-  .yasqe .CodeMirror-gutter,
-  .yasqe .CodeMirror-gutters,
-  .yasqe .CodeMirror-linenumber {
+  .yate .CodeMirror-scroll,
+  .yate .CodeMirror-sizer,
+  .yate .CodeMirror-gutter,
+  .yate .CodeMirror-gutters,
+  .yate .CodeMirror-linenumber {
     box-sizing: content-box; }
-  .yasqe .CodeMirror-measure {
+  .yate .CodeMirror-measure {
     position: absolute;
     width: 100%;
     height: 0;
     overflow: hidden;
     visibility: hidden; }
-  .yasqe .CodeMirror-cursor {
+  .yate .CodeMirror-cursor {
     position: absolute;
     pointer-events: none; }
-  .yasqe .CodeMirror-measure pre {
+  .yate .CodeMirror-measure pre {
     position: static; }
-  .yasqe div.CodeMirror-cursors {
+  .yate div.CodeMirror-cursors {
     visibility: hidden;
     position: relative;
     z-index: 3; }
-  .yasqe div.CodeMirror-dragcursors {
+  .yate div.CodeMirror-dragcursors {
     visibility: visible; }
-  .yasqe .CodeMirror-focused div.CodeMirror-cursors {
+  .yate .CodeMirror-focused div.CodeMirror-cursors {
     visibility: visible; }
-  .yasqe .CodeMirror-selected {
+  .yate .CodeMirror-selected {
     background: #d9d9d9; }
-  .yasqe .CodeMirror-focused .CodeMirror-selected {
+  .yate .CodeMirror-focused .CodeMirror-selected {
     background: #d7d4f0; }
-  .yasqe .CodeMirror-crosshair {
+  .yate .CodeMirror-crosshair {
     cursor: crosshair; }
-  .yasqe .CodeMirror-line::selection, .yasqe .CodeMirror-line > span::selection, .yasqe .CodeMirror-line > span > span::selection {
+  .yate .CodeMirror-line::selection, .yate .CodeMirror-line > span::selection, .yate .CodeMirror-line > span > span::selection {
     background: #d7d4f0; }
-  .yasqe .CodeMirror-line::-moz-selection, .yasqe .CodeMirror-line > span::-moz-selection, .yasqe .CodeMirror-line > span > span::-moz-selection {
+  .yate .CodeMirror-line::-moz-selection, .yate .CodeMirror-line > span::-moz-selection, .yate .CodeMirror-line > span > span::-moz-selection {
     background: #d7d4f0; }
-  .yasqe .cm-searching {
+  .yate .cm-searching {
     background: #ffa;
     background: rgba(255, 255, 0, 0.4); }
-  .yasqe .CodeMirror span {
+  .yate .CodeMirror span {
     *vertical-align: text-bottom; }
-  .yasqe .cm-force-border {
+  .yate .cm-force-border {
     padding-right: .1px; }
   @media print {
-    .yasqe {
+    .yate {
       /* Hide the cursor when printing */ }
-      .yasqe .CodeMirror div.CodeMirror-cursors {
+      .yate .CodeMirror div.CodeMirror-cursors {
         visibility: hidden; } }
-  .yasqe .cm-tab-wrap-hack:after {
+  .yate .cm-tab-wrap-hack:after {
     content: ''; }
-  .yasqe span.CodeMirror-selectedtext {
+  .yate span.CodeMirror-selectedtext {
     background: none; }
-  .yasqe .CodeMirror-fullscreen {
+  .yate .CodeMirror-fullscreen {
     position: fixed;
     top: 0;
     left: 0;
@@ -325,26 +325,26 @@
     bottom: 0;
     height: auto;
     z-index: 9; }
-  .yasqe .CodeMirror-foldmarker {
+  .yate .CodeMirror-foldmarker {
     color: blue;
     text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
     font-family: arial;
     line-height: .3;
     cursor: pointer; }
-  .yasqe .CodeMirror-foldgutter {
+  .yate .CodeMirror-foldgutter {
     width: .7em; }
-  .yasqe .CodeMirror-foldgutter-open,
-  .yasqe .CodeMirror-foldgutter-folded {
+  .yate .CodeMirror-foldgutter-open,
+  .yate .CodeMirror-foldgutter-folded {
     cursor: pointer; }
-  .yasqe .CodeMirror-foldgutter-open:after {
+  .yate .CodeMirror-foldgutter-open:after {
     content: "\25BE"; }
-  .yasqe .CodeMirror-foldgutter-folded:after {
+  .yate .CodeMirror-foldgutter-folded:after {
     content: "\25B8"; }
 
 @-webkit-keyframes spin {
   100% {
     -webkit-transform: rotate(360deg); } }
-  .yasqe .yasqe_btn {
+  .yate .yate_btn {
     color: #333;
     border: 1px solid transparent;
     background-color: #fff;
@@ -363,46 +363,46 @@
     /* margin: 0; */
     overflow: visible;
     box-sizing: border-box; }
-    .yasqe .yasqe_btn.btn_icon {
+    .yate .yate_btn.btn_icon {
       padding: 4px 8px; }
-    .yasqe .yasqe_btn[disabled], .yasqe .yasqe_btn.disabled {
+    .yate .yate_btn[disabled], .yate .yate_btn.disabled {
       cursor: default;
       opacity: .50;
       filter: alpha(opacity=50);
       box-shadow: none; }
-    .yasqe .yasqe_btn:hover {
+    .yate .yate_btn:hover {
       outline: 0;
       background-color: #ebebeb;
       border-color: #adadad; }
-    .yasqe .yasqe_btn:focus, .yasqe .yasqe_btn.selected {
+    .yate .yate_btn:focus, .yate .yate_btn.selected {
       color: #fff;
       outline: 0;
       background-color: #337ab7;
       border-color: #337ab7; }
-    .yasqe .yasqe_btn.btn_icon:focus {
+    .yate .yate_btn.btn_icon:focus {
       color: #333;
       border: 1px solid transparent;
       background-color: #fff;
       border-color: #ccc; }
-    .yasqe .yasqe_btn.yasqe_btn-sm {
+    .yate .yate_btn.yate_btn-sm {
       padding: 1px 5px;
       font-size: 12px;
       line-height: 1.5;
       border-radius: 3px; }
-  .yasqe .yasqe_buttons {
+  .yate .yate_buttons {
     position: absolute;
     top: 5px;
     right: 5px;
     z-index: 5; }
-    .yasqe .yasqe_buttons .yasqe_share {
+    .yate .yate_buttons .yate_share {
       cursor: pointer;
       height: 20px;
       width: 20px;
       margin-top: 3px; }
-    .yasqe .yasqe_buttons div {
+    .yate .yate_buttons div {
       vertical-align: top;
       margin-left: 5px; }
-      .yasqe .yasqe_buttons div.yasqe_sharePopup {
+      .yate .yate_buttons div.yate_sharePopup {
         position: absolute;
         padding: 4px;
         margin-left: 0px;
@@ -414,10 +414,10 @@
         height: auto;
         display: -webkit-box;
         display: flex; }
-        .yasqe .yasqe_buttons div.yasqe_sharePopup .inputWrapper {
+        .yate .yate_buttons div.yate_sharePopup .inputWrapper {
           -webkit-box-flex: 100;
                   flex-grow: 100; }
-        .yasqe .yasqe_buttons div.yasqe_sharePopup input {
+        .yate .yate_buttons div.yate_sharePopup input {
           float: left;
           width: 100%;
           border: 0px;
@@ -431,22 +431,22 @@
           /* Opera/IE 8+ */
           box-sizing: border-box;
           /* css3 rec */ }
-        .yasqe .yasqe_buttons div.yasqe_sharePopup button {
+        .yate .yate_buttons div.yate_sharePopup button {
           float: right;
           margin-left: 5px; }
-        .yasqe .yasqe_buttons div.yasqe_sharePopup textarea {
+        .yate .yate_buttons div.yate_sharePopup textarea {
           width: 100%; }
-    .yasqe .yasqe_buttons .yasqe_queryButton {
+    .yate .yate_buttons .yate_queryButton {
       display: inline-block;
       cursor: pointer;
       width: 40px;
       height: 40px;
       margin-left: 10px; }
-      .yasqe .yasqe_buttons .yasqe_queryButton div {
+      .yate .yate_buttons .yate_queryButton div {
         margin-left: 0px; }
-      .yasqe .yasqe_buttons .yasqe_queryButton .svgImg {
+      .yate .yate_buttons .yate_queryButton .svgImg {
         display: block; }
-      .yasqe .yasqe_buttons .yasqe_queryButton .loader {
+      .yate .yate_buttons .yate_queryButton .loader {
         width: 36px;
         height: 36px;
         border-radius: 50%;
@@ -455,38 +455,37 @@
         border-top-color: #000;
         -webkit-animation: spin 1s infinite linear;
                 animation: spin 1s infinite linear; }
-  .yasqe .fullscreenToggleBtns {
+  .yate .fullscreenToggleBtns {
     display: inline-block;
     margin-top: 3px; }
-    .yasqe .fullscreenToggleBtns div {
+    .yate .fullscreenToggleBtns div {
       cursor: pointer;
       width: 20px;
       height: 20px; }
-    .yasqe .fullscreenToggleBtns .yasqe_smallscreenBtn {
+    .yate .fullscreenToggleBtns .yate_smallscreenBtn {
       display: none; }
-  .yasqe .CodeMirror {
+  .yate .CodeMirror {
     line-height: 1.5em;
     border: 1px solid #d1d1d1; }
-  .yasqe pre {
+  .yate pre {
     font-size: 13px; }
-  .yasqe span.cm-error {
+  .yate span.cm-error {
     border-bottom: 2px dotted red; }
-  .yasqe .gutterErrorBar {
+  .yate .gutterErrorBar {
     width: 4px; }
-  .yasqe .CodeMirror-fullscreen .fullscreenToggleBtns .yasqe_smallscreenBtn {
+  .yate .CodeMirror-fullscreen .fullscreenToggleBtns .yate_smallscreenBtn {
     display: inline-block; }
-  .yasqe .CodeMirror-fullscreen .fullscreenToggleBtns .yasqe_fullscreenBtn {
+  .yate .CodeMirror-fullscreen .fullscreenToggleBtns .yate_fullscreenBtn {
     display: none; }
-  .yasqe .CodeMirror-foldmarker {
+  .yate .CodeMirror-foldmarker {
     color: #6E2500;
     text-shadow: #FF935E 1px 1px 2px,#FF935E -1px -1px 2px,#FF935E 1px -1px 2px,#FF935E -1px 1px 2px;
     font-size: 19px; }
-  .yasqe .matchingVar {
+  .yate .matchingVar {
     background-color: #DBDEED;
     border-radius: 6px;
-    -webkit-transition: background 0.5s linear;
     transition: background 0.5s linear; }
-  .yasqe .backdrop {
+  .yate .backdrop {
     background-color: #000;
     opacity: 0.5;
     position: absolute;
@@ -496,14 +495,14 @@
     bottom: 0px;
     z-index: 5;
     display: none; }
-  .yasqe .svgImg {
+  .yate .svgImg {
     display: inline-block; }
-  .yasqe span.shortlinkErr {
+  .yate span.shortlinkErr {
     font-size: small;
     color: red;
     font-weight: bold;
     float: left; }
-  .yasqe .completionNotification {
+  .yate .completionNotification {
     color: #999;
     background-color: #f7f7f7;
     position: absolute;
@@ -511,10 +510,10 @@
     right: 0px;
     bottom: 0px;
     font-size: 90%; }
-  .yasqe .parseErrorIcon {
+  .yate .parseErrorIcon {
     width: 15px;
     height: 15px; }
-  .yasqe .yasqe_tooltip {
+  .yate .yate_tooltip {
     display: inline;
     position: absolute;
     background: #333;
@@ -535,7 +534,7 @@
     white-space: pre-wrap;
     /* css-3 */
     white-space: normal; }
-  .yasqe .notificationLoader {
+  .yate .notificationLoader {
     width: 18px;
     height: 18px;
     vertical-align: middle; }

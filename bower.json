@@ -1,17 +1,17 @@
 {
-  "name": "yasqe",
-  "version": "2.11.14",
-  "homepage": "http://yasqe.yasgui.org",
+  "name": "perfectkb-yate",
+  "version": "0.9.0",
+  "homepage": "https://perfectkb.github.io/yate",
   "authors": [
-    "Laurens Rietveld <laurens.rietveld@gmail.com>"
+    "Maxime Lefrançois <maxime.lefrançois@emse.fr>"
   ],
-  "description": "Yet Another SPARQL Query Editor",
-  "main": "dist/yasqe.bundled.min.js",
+  "description": "Yet Another Turtle Editor, forked from YASQE",
+  "main": "dist/yate.bundled.min.js",
   "moduleType": [
     "globals"
   ],
   "keywords": [
-    "SPARQL",
+    "Turtle",
     "Linked Data"
   ],
   "license": "MIT",
