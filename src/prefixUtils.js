@@ -24,20 +24,20 @@ var addPrefixAsString = function(yasqe, prefixString) {
   var numLines = yasqe.lineCount();
   for (var i = 0; i < numLines; i++) {
     var firstToken = yasqe.getNextNonWsToken(i);
-    if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string == "BASE")) {
+    if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string.toUpperCase() == "@PREFIX" || firstToken.string.toUpperCase() == "@BASE" || firstToken.string == "BASE")) {
       lastPrefix = firstToken;
       lastPrefixLine = i;
     }
   }
 
   if (lastPrefix == null) {
-    yasqe.replaceRange("PREFIX " + prefixString + "\n", {
+    yasqe.replaceRange("@prefix " + prefixString + " .\n", {
       line: 0,
       ch: 0
     });
   } else {
     var previousIndent = getIndentFromLine(yasqe, lastPrefixLine);
-    yasqe.replaceRange("\n" + previousIndent + "PREFIX " + prefixString, {
+    yasqe.replaceRange("\n" + previousIndent + "@prefix " + prefixString + " .", {
       line: lastPrefixLine
     });
   }

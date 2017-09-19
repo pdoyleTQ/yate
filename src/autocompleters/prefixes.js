@@ -66,7 +66,7 @@ module.exports.isValidCompletionPosition = function(yasqe) {
   // there should be no trailing text (otherwise, text is wrongly inserted
   // in between)
   var previousToken = yasqe.getPreviousNonWsToken(cur.line, token);
-  if (!previousToken || previousToken.string.toUpperCase() != "PREFIX") return false;
+  if (!previousToken || previousToken.string.toUpperCase() != "PREFIX" || previousToken.string.toUpperCase() != "@PREFIX") return false;
   return true;
 };
 module.exports.preprocessPrefixTokenForCompletion = function(yasqe, token) {
@@ -105,7 +105,7 @@ module.exports.appendPrefixIfNeeded = function(yasqe, completerName) {
         line: cur.line,
         ch: token.start
       }); // needs to be null (beginning of line), or whitespace
-      if (lastNonWsTokenString != "PREFIX" && (previousToken.type == "ws" || previousToken.type == null)) {
+      if (lastNonWsTokenString != "PREFIX" && lastNonWsTokenString != "@PREFIX" && (previousToken.type == "ws" || previousToken.type == null)) {
         // check whether it isnt defined already (saves us from looping
         // through the array)
         var currentPrefix = token.string.substring(0, colonIndex + 1);
