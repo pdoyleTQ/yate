@@ -71,6 +71,7 @@
     "url": "https://github.com/perfectkb/yate.git"
   },
   "dependencies": {
+    "clipboard": "^1.7.1",
     "codemirror": "5.17.0",
     "jquery": "^2.2.4",
     "node-sass": "^3.8.0",

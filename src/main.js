@@ -11,7 +11,8 @@ var $ = require("jquery"),
   CodeMirror = require("codemirror"),
   utils = require("./utils.js"),
   yutils = require("yasgui-utils"),
-  imgs = require("./imgs.js");
+  imgs = require("./imgs.js"),
+  Clipboard = require("clipboard");
 
 require("../lib/deparam.js");
 require("codemirror/addon/fold/foldcode.js");
@@ -70,6 +71,7 @@ var extendConfig = function(config) {
  * @private
  */
 var extendCmInstance = function(yate) {
+
   //instantiate autocompleters
   yate.autocompleters = require("./autocompleters/autocompleterBase.js")(root, yate);
   if (yate.options.autocompleters) {
@@ -166,6 +168,7 @@ var extendCmInstance = function(yate) {
   yate.disableCompleter = function(name) {
     removeCompleterFromSettings(yate.options, name);
   };
+
   return yate;
 };
 
@@ -193,6 +196,12 @@ var postProcessCmElement = function(yate) {
   }
 
   root.drawButtons(yate);
+
+  new Clipboard('#copy', {
+        text: function(trigger) {
+            return yate.getValue();
+        }
+  });
 
   /**
 	 * Add event handlers
@@ -478,6 +487,55 @@ root.drawButtons = function(yate) {
   }
 
   /**
+   * draw download button
+   */
+
+  var downloadButton = $("<div>", {
+    class: "downloadBtns"
+  })
+    .append(
+      $(yutils.svg.getElement(imgs.download))
+        .addClass("yate_downloadBtn")
+        .attr("title", "Download File")
+        .click(function() {          
+          var textFileAsBlob = new Blob([ yate.getValue() ], { type: 'text/turtle' });
+          var fileNameToSaveAs = "document.ttl";
+
+          var downloadLink = document.createElement("a");
+          downloadLink.download = fileNameToSaveAs;
+          downloadLink.innerHTML = "Download File";
+          if (window.URL != null) {
+            // Chrome allows the link to be clicked without actually adding it to the DOM.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+          } else {
+            // Firefox requires the link to be added to the DOM before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+          }
+          downloadLink.click();
+        })
+    );
+  yate.buttons.append(downloadButton);
+
+
+  /**
+   * draw copy button
+   */
+
+  var copyButton = $("<div>", {
+    class: "downloadBtns"
+  })
+    .append(
+      $(yutils.svg.getElement(imgs.copy))
+        .addClass("yate_downloadBtn")
+        .attr("id", "copy")
+        .attr("title", "Copy to the clipboard")
+      );
+  yate.buttons.append(copyButton);
+
+  /**
 	 * draw fullscreen button
 	 */
 
@@ -629,6 +687,8 @@ var autoFormatRange = function(yate, from, to) {
   });
 };
 
+
+
 var autoFormatLineBreaks = function(text, start, end) {
   text = text.substring(start, end);
   var breakAfterArray = [
@@ -690,3 +750,4 @@ root.version = {
   jquery: $.fn.jquery,
   "yasgui-utils": yutils.version
 };
+

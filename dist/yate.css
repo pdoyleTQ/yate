@@ -445,6 +445,13 @@
       height: 20px; }
     .yate .fullscreenToggleBtns .yate_smallscreenBtn {
       display: none; }
+  .yate .downloadBtns {
+    display: inline-block;
+    margin-top: 3px; }
+    .yate .downloadBtns div {
+      cursor: pointer;
+      width: 20px;
+      height: 20px; }
   .yate .CodeMirror {
     line-height: 1.5em;
     border: 1px solid #d1d1d1; }
