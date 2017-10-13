@@ -84,7 +84,7 @@ storeProperty==>[].
   rdfLiteral ==> [string, ?('LANGTAG' or ['^^',iri])].
 
 %[133s]
-  booleanLiteral ==> ['true', 'false'].
+  booleanLiteral ==> [or('true', 'false')].
 
 %[17]
   string ==> ['STRING_LITERAL_QUOTE'].
@@ -118,15 +118,15 @@ tm_regex([
 'STRING_LITERAL_SINGLE_QUOTE',
 'STRING_LITERAL_LONG_SINGLE_QUOTE',
 'STRING_LITERAL_LONG_QUOTE',
-'ANON'
+'ANON',
+'true',
+'false'
 ]).
 
 % Terminals where name of terminal is uppercased token content
 tm_keywords([
 'BASE',
-'PREFIX',
-'true',
-'false'
+'PREFIX'
 ]).
 
 % Other tokens representing fixed, case sensitive, strings
