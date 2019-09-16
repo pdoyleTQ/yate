@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.YATE = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.YATE = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 /*
   jQuery deparam is an extraction of the deparam method from Ben Alman's jQuery BBQ
@@ -860,7 +860,7 @@ CodeMirror.defineMode("rdf11turtle", function(config, parserConfig) {
       // Incremental LL1 parse
       while (state.stack.length > 0 && token && state.OK && !finished) {
         topSymbol = state.stack.pop();
-
+        if (topSymbol === 'var' && tokenOb.text) state.variables[tokenOb.text] = tokenOb.text;
         if (!ll1_table[topSymbol]) {
           // Top symbol is a terminal
           if (topSymbol == token) {
@@ -1017,7 +1017,8 @@ CodeMirror.defineMode("rdf11turtle", function(config, parserConfig) {
         inLiteral: false,
         stack: [grammar.startSymbol],
         lastPredicateOffset: config.indentUnit,
-        prefixes: {}
+        prefixes: {},
+        variables: {}
       };
     },
     indent: indent,
@@ -3239,7 +3240,7 @@ var closest = require('./closest');
  * @param {Boolean} useCapture
  * @return {Object}
  */
-function delegate(element, selector, type, callback, useCapture) {
+function _delegate(element, selector, type, callback, useCapture) {
     var listenerFn = listener.apply(this, arguments);
 
     element.addEventListener(type, listenerFn, useCapture);
@@ -3249,6 +3250,40 @@ function delegate(element, selector, type, callback, useCapture) {
             element.removeEventListener(type, listenerFn, useCapture);
         }
     }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
 }
 
 /**
@@ -4787,6 +4822,7 @@ E.prototype = {
 };
 
 module.exports = E;
+module.exports.TinyEmitter = E;
 
 },{}],34:[function(require,module,exports){
 module.exports={
@@ -4801,7 +4837,7 @@ module.exports={
         "spec": ">=1.6.7 <2.0.0",
         "type": "range"
       },
-      "C:\\Users\\maxime.lefrancois\\Dropbox\\_Recherche\\netbeansprojects\\YASGUI.YASQE"
+      "/home/node/app"
     ]
   ],
   "_from": "yasgui-utils@>=1.6.7 <2.0.0",
@@ -4835,7 +4871,7 @@ module.exports={
   "_shasum": "2bcfc5a315688de3ae6057883d9ae342b205f267",
   "_shrinkwrap": null,
   "_spec": "yasgui-utils@^1.6.7",
-  "_where": "C:\\Users\\maxime.lefrancois\\Dropbox\\_Recherche\\netbeansprojects\\YASGUI.YASQE",
+  "_where": "/home/node/app",
   "author": {
     "name": "Laurens Rietveld"
   },
@@ -5033,7 +5069,8 @@ module.exports={
     "build": "gulp",
     "patch": "gulp patch",
     "minor": "gulp minor",
-    "major": "gulp major"
+    "major": "gulp major",
+    "update-interactive": "npm-check --skip-unused -u"
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
@@ -5096,12 +5133,7 @@ module.exports={
     "clipboard": "^1.7.1",
     "codemirror": "5.17.0",
     "jquery": "^2.2.4",
-    "node-sass": "^3.8.0",
     "prettier": "^1.4.4",
-    "run-sequence": "^1.2.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "~1.1.0",
-    "vinyl-transform": "1.0.0",
     "yasgui-utils": "^1.6.7"
   },
   "optionalShim": {
@@ -5458,7 +5490,7 @@ module.exports = function(yate, completerName) {
       return module.exports.isValidCompletionPosition(yate);
     },
     get: function(token, callback) {
-      $.get(module.exports.fetchFrom, function(data) {
+      $.getJSON(module.exports.fetchFrom, function(data) {
         var prefixArray = [];
         for (var prefix in data) {
           if (prefix == "bif") continue; // skip this one! see #231
@@ -5669,7 +5701,7 @@ var postprocessResourceTokenForCompletion = function(yate, token, suggestedStrin
 };
 
 //Use protocol relative request when served via http[s]*. Otherwise (e.g. file://, fetch via http)
-var reqProtocol = window.location.protocol.indexOf("http") === 0 ? "//" : "http://";
+var reqProtocol = window.location.protocol.indexOf("http") === 0 ? "https://" : "http://";
 var fetchFromLov = function(yate, completer, token, callback) {
   if (!token || !token.string || token.string.trim().length == 0) {
     yate.autocompleters.notifications.getEl(completer).empty().append("Nothing to autocomplete yet!");
@@ -5689,7 +5721,7 @@ var fetchFromLov = function(yate, completer, token, callback) {
   var results = [];
   var url = "";
   var updateUrl = function() {
-    url = reqProtocol + "lov.okfn.org/dataset/lov/api/v2/autocomplete/terms?" + $.param(args);
+    url = reqProtocol + "lov.linkeddata.es/dataset/lov/api/v2/autocomplete/terms?" + $.param(args);
   };
   updateUrl();
   var increasePage = function() {
@@ -5746,7 +5778,7 @@ module.exports = function(yate) {
       var token = yate.getTokenAt(yate.getCursor());
       if (token.type != "ws") {
         token = yate.getCompleteToken(token);
-        if (token && token.string.indexOf("?") == 0) {
+        if (token && (token.string[0] === '?' || token.string[0] === '$')) {
           return true;
         }
       }
@@ -5756,10 +5788,11 @@ module.exports = function(yate) {
       if (token.trim().length == 0) return []; //nothing to autocomplete
       var distinctVars = {};
       //do this outside of codemirror. I expect jquery to be faster here (just finding dom elements with classnames)
+      //and: this'll still work when the query is incorrect (i.e., when simply typing '?')
       $(yate.getWrapperElement()).find(".cm-atom").each(function() {
         var variable = this.innerHTML;
-        if (variable.indexOf("?") == 0) {
-          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when document is not syntactically valid)
+        if (variable[0] === '?' || variable[0] === '$') {
+          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when query is not syntactically valid)
           var nextEl = $(this).next();
           var nextElClass = nextEl.attr("class");
           if (nextElClass && nextEl.attr("class").indexOf("cm-atom") >= 0) {
@@ -5995,6 +6028,10 @@ var extendCmInstance = function(yate) {
       if (root.Autocompleters[name]) yate.autocompleters.init(name, root.Autocompleters[name]);
     });
   }
+  yate.emit = function(event, data) {
+    root.signal(yate, event, data)
+  }
+  yate.lastQueryDuration = null;
   yate.getCompleteToken = function(token, cur) {
     return require("./tokenUtils.js").getCompleteToken(yate, token, cur);
   };
@@ -6061,6 +6098,61 @@ var extendCmInstance = function(yate) {
   yate.removePrefixes = function(prefixes) {
     return require("./prefixUtils.js").removePrefixes(yate, prefixes);
   };
+  yasqe.getVariablesFromQuery = function() {
+    //Use precise here. We want to be sure we use the most up to date state. If we're
+    //not, we might get outdated info from the current query (creating loops such
+    //as https://github.com/OpenTriply/YASGUI/issues/84)
+    //on caveat: this function won't work when query is invalid (i.e. when typing)
+    return $.map(yasqe.getTokenAt({ line: yasqe.lastLine(), ch: yasqe.getLine(yasqe.lastLine()).length }, true).state.variables, function(val,key) {return key});
+  }
+  //values in the form of {?var: 'value'}, or [{?var: 'value'}]
+  yasqe.getQueryWithValues = function(values) {
+    if (!values) return yasqe.getValue();
+    var injectString;
+    if (typeof values === 'string') {
+      injectString = values;
+    } else {
+      //start building inject string
+      if (!Array.isArray(values)) values = [values];
+      var variables = values.reduce(function(vars, valueObj) {
+        for (var v in valueObj) {
+          vars[v] = v;
+        }
+        return vars;
+      }, {})
+      var varArray = [];
+      for (var v in variables) {
+        varArray.push(v);
+      }
+
+      if (!varArray.length) return yasqe.getValue() ;
+      //ok, we've got enough info to start building the string now
+      injectString = "VALUES (" + varArray.join(' ') + ") {\n";
+      values.forEach(function(valueObj) {
+        injectString += "( ";
+        varArray.forEach(function(variable) {
+          injectString += valueObj[variable] || "UNDEF"
+        })
+        injectString += " )\n"
+      })
+      injectString += "}\n"
+    }
+    if (!injectString) return yasqe.getValue();
+
+    var newQuery = ""
+    var injected = false;
+    var gotSelect = false;
+    root.runMode(yasqe.getValue(), "sparql11", function(stringVal, className, row, col, state) {
+      if (className === "keyword" && stringVal.toLowerCase() === 'select') gotSelect = true;
+      newQuery += stringVal;
+      if (gotSelect && !injected && className === "punc" && stringVal === "{") {
+        injected = true;
+        //start injecting
+        newQuery += "\n" + injectString;
+      }
+    });
+    return newQuery
+  }
 
   yate.getValueWithoutComments = function() {
     var cleanedDocument = "";
@@ -6228,7 +6320,7 @@ var checkSyntax = function(yate, deepcheck) {
     if (state.OK == false) {
       if (!yate.options.syntaxErrorCheck) {
         //the library we use already marks everything as being an error. Overwrite this class attribute.
-        $(yate.getWrapperElement).find(".sp-error").css("color", "black");
+        $(yate.getWrapperElement()).find(".sp-error").css("color", "black");
         //we don't want to gutter error, so return
         return;
       }
@@ -6464,6 +6556,7 @@ root.drawButtons = function(yate) {
         .attr("title", "Set editor full screen")
         .click(function() {
           yate.setOption("fullScreen", true);
+          yate.emit('fullscreen-enter')
         })
     )
     .append(
@@ -6472,6 +6565,7 @@ root.drawButtons = function(yate) {
         .attr("title", "Set editor to normal size")
         .click(function() {
           yate.setOption("fullScreen", false);
+          yate.emit('fullscreen-leave')
         })
     );
   yate.buttons.append(toggleFullscreen);
@@ -6672,7 +6766,7 @@ root.version = {
 var CodeMirror = (function(){try{return require('codemirror')}catch(e){return window.CodeMirror}})(), tokenUtils = require("./tokenUtils.js");
 
 ("use strict");
-var lookFor = "PREFIX";
+var lookFor = "PREFIX ";
 module.exports = {
   findFirstPrefixLine: function(cm) {
     var lastLine = cm.lastLine();
@@ -6700,8 +6794,9 @@ function findFirstPrefix(cm, line, ch, lineText) {
     if (pass == 1 && found < ch) break;
     var tokenType = cm.getTokenTypeAt(CodeMirror.Pos(line, found + 1));
     if (!/^(comment|string)/.test(tokenType)) return found + 1;
-    at = found - 1;
-    //Could not find a prefix, no use looping any further. Probably invalid document
+    if (!/(comment)/.test(tokenType)) break;
+    
+    //Could not find a prefix, no use looping any further. Probably invalid query
     if (at === pass) break;
   }
 }
@@ -6801,35 +6896,45 @@ var addPrefixes = function(yate, prefixes) {
     addPrefixAsString(yate, prefixes);
   } else {
     for (var pref in prefixes) {
-      if (!(pref in existingPrefixes)) addPrefixAsString(yate, pref + ": <" + prefixes[pref] + ">");
+      if (!(pref in existingPrefixes))
+        addPrefixAsString(yate, pref + ": <" + prefixes[pref] + ">");
     }
   }
   yate.collapsePrefixes(false);
 };
 
-var addPrefixAsString = function(yate, prefixString) {
-  var lastPrefix = null;
-  var lastPrefixLine = 0;
-  var numLines = yate.lineCount();
-  for (var i = 0; i < numLines; i++) {
-    var firstToken = yate.getNextNonWsToken(i);
-    if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string.toUpperCase() == "@PREFIX" || firstToken.string.toUpperCase() == "@BASE" || firstToken.string == "BASE")) {
-      lastPrefix = firstToken;
-      lastPrefixLine = i;
-    }
-  }
+// commented for merging version 2019/09/16 of TriplyDB/YASGUI.YASQE
+// var addPrefixAsString = function(yate, prefixString) {
+//   var lastPrefix = null;
+//   var lastPrefixLine = 0;
+//   var numLines = yate.lineCount();
+//   for (var i = 0; i < numLines; i++) {
+//     var firstToken = yate.getNextNonWsToken(i);
+//     if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string.toUpperCase() == "@PREFIX" || firstToken.string.toUpperCase() == "@BASE" || firstToken.string == "BASE")) {
+//       lastPrefix = firstToken;
+//       lastPrefixLine = i;
+//     }
+//   }
 
-  if (lastPrefix == null) {
-    yate.replaceRange("@prefix " + prefixString + " .\n", {
-      line: 0,
-      ch: 0
-    });
-  } else {
-    var previousIndent = getIndentFromLine(yate, lastPrefixLine);
-    yate.replaceRange("\n" + previousIndent + "@prefix " + prefixString + " .", {
-      line: lastPrefixLine
-    });
-  }
+//   if (lastPrefix == null) {
+//     yate.replaceRange("@prefix " + prefixString + " .\n", {
+//       line: 0,
+//       ch: 0
+//     });
+//   } else {
+//     var previousIndent = getIndentFromLine(yate, lastPrefixLine);
+//     yate.replaceRange("\n" + previousIndent + "@prefix " + prefixString + " .", {
+//       line: lastPrefixLine
+//     });
+//   }
+//   yate.collapsePrefixes(false);
+
+var addPrefixAsString = function(yate, prefixString) {
+  yate.replaceRange("@prefix " + prefixString + "\n", {
+    line: 0,
+    ch: 0
+  });
+
   yate.collapsePrefixes(false);
 };
 var removePrefixes = function(yate, prefixes) {
@@ -6841,7 +6946,17 @@ var removePrefixes = function(yate, prefixes) {
     yate.setValue(
       yate
         .getValue()
-        .replace(new RegExp("PREFIX\\s*" + pref + ":\\s*" + escapeRegex("<" + prefixes[pref] + ">") + "\\s*", "ig"), "")
+        .replace(
+          new RegExp(
+            "PREFIX\\s*" +
+              pref +
+              ":\\s*" +
+              escapeRegex("<" + prefixes[pref] + ">") +
+              "\\s*",
+            "ig"
+          ),
+          ""
+        )
     );
   }
   yate.collapsePrefixes(false);
@@ -6857,7 +6972,10 @@ var getPrefixesFromDocument = function(yate) {
   //Use precise here. We want to be sure we use the most up to date state. If we're
   //not, we might get outdated prefixes from the current document (creating loops such
   //as https://github.com/OpenTriply/YASGUI/issues/84)
-  return yate.getTokenAt({ line: yate.lastLine(), ch: yate.getLine(yate.lastLine()).length }, true).state.prefixes;
+  return yate.getTokenAt(
+    { line: yate.lastLine(), ch: yate.getLine(yate.lastLine()).length },
+    true
+  ).state.prefixes;
 };
 
 /**

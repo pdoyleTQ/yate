@@ -5,12 +5,8 @@ require("../node_modules/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.j
 $(document).ready(function() {
   //get the latest hosted version
   if ($("#cdnDownload").length > 0) {
-<<<<<<< HEAD
     var name = "yate";
-=======
-    var name = "yasqe";
-    var npmName = "yasgui-" + name;
->>>>>>> up
+    var npmName = "perfectkb-yate";
     //only draw when we've got some place to print this info (might not be on all pages where we include this js file)
     $.get("https://data.jsdelivr.com/v1/package/npm/" + npmName, function(data) {
       var version = data.tags.latest;

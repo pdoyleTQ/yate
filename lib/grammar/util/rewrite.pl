@@ -8,11 +8,7 @@ stephen.cresswell@tso.co.uk
 
 
 ebnf_to_bnf:-
-<<<<<<< HEAD
 	retractall('=>'),
-=======
-	retractall(_=>_),
->>>>>>> up
 	remember(change),
 	rewrite_until_stable.
 
