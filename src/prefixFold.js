@@ -1,7 +1,7 @@
 var CodeMirror = require("codemirror"), tokenUtils = require("./tokenUtils.js");
 
 ("use strict");
-var lookFor = "PREFIX";
+var lookFor = "PREFIX ";
 module.exports = {
   findFirstPrefixLine: function(cm) {
     var lastLine = cm.lastLine();
@@ -29,8 +29,9 @@ function findFirstPrefix(cm, line, ch, lineText) {
     if (pass == 1 && found < ch) break;
     var tokenType = cm.getTokenTypeAt(CodeMirror.Pos(line, found + 1));
     if (!/^(comment|string)/.test(tokenType)) return found + 1;
-    at = found - 1;
-    //Could not find a prefix, no use looping any further. Probably invalid document
+    if (!/(comment)/.test(tokenType)) break;
+    
+    //Could not find a prefix, no use looping any further. Probably invalid query
     if (at === pass) break;
   }
 }

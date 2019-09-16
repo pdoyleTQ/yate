@@ -97,9 +97,14 @@
 				box-sizing: border-box;         /* Opera/IE 8+ */
 				box-sizing: border-box; /* css3 rec */
 			}
+      margin-left: 10px;
 			button {
 				float:right;
 				margin-left: 5px;
+      }
+			.svgImg {
+				display:block;
+				height: inherit;
 			}
 			textarea {
 				width: 100%;

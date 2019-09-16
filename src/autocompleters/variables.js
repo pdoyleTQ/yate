@@ -6,7 +6,7 @@ module.exports = function(yate) {
       var token = yate.getTokenAt(yate.getCursor());
       if (token.type != "ws") {
         token = yate.getCompleteToken(token);
-        if (token && token.string.indexOf("?") == 0) {
+        if (token && (token.string[0] === '?' || token.string[0] === '$')) {
           return true;
         }
       }
@@ -16,10 +16,11 @@ module.exports = function(yate) {
       if (token.trim().length == 0) return []; //nothing to autocomplete
       var distinctVars = {};
       //do this outside of codemirror. I expect jquery to be faster here (just finding dom elements with classnames)
+      //and: this'll still work when the query is incorrect (i.e., when simply typing '?')
       $(yate.getWrapperElement()).find(".cm-atom").each(function() {
         var variable = this.innerHTML;
-        if (variable.indexOf("?") == 0) {
-          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when document is not syntactically valid)
+        if (variable[0] === '?' || variable[0] === '$') {
+          //ok, lets check if the next element in the div is an atom as well. In that case, they belong together (may happen sometimes when query is not syntactically valid)
           var nextEl = $(this).next();
           var nextElClass = nextEl.attr("class");
           if (nextElClass && nextEl.attr("class").indexOf("cm-atom") >= 0) {

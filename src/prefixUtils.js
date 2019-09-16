@@ -12,35 +12,45 @@ var addPrefixes = function(yate, prefixes) {
     addPrefixAsString(yate, prefixes);
   } else {
     for (var pref in prefixes) {
-      if (!(pref in existingPrefixes)) addPrefixAsString(yate, pref + ": <" + prefixes[pref] + ">");
+      if (!(pref in existingPrefixes))
+        addPrefixAsString(yate, pref + ": <" + prefixes[pref] + ">");
     }
   }
   yate.collapsePrefixes(false);
 };
 
-var addPrefixAsString = function(yate, prefixString) {
-  var lastPrefix = null;
-  var lastPrefixLine = 0;
-  var numLines = yate.lineCount();
-  for (var i = 0; i < numLines; i++) {
-    var firstToken = yate.getNextNonWsToken(i);
-    if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string.toUpperCase() == "@PREFIX" || firstToken.string.toUpperCase() == "@BASE" || firstToken.string == "BASE")) {
-      lastPrefix = firstToken;
-      lastPrefixLine = i;
-    }
-  }
+// commented for merging version 2019/09/16 of TriplyDB/YASGUI.YASQE
+// var addPrefixAsString = function(yate, prefixString) {
+//   var lastPrefix = null;
+//   var lastPrefixLine = 0;
+//   var numLines = yate.lineCount();
+//   for (var i = 0; i < numLines; i++) {
+//     var firstToken = yate.getNextNonWsToken(i);
+//     if (firstToken != null && (firstToken.string == "PREFIX" || firstToken.string.toUpperCase() == "@PREFIX" || firstToken.string.toUpperCase() == "@BASE" || firstToken.string == "BASE")) {
+//       lastPrefix = firstToken;
+//       lastPrefixLine = i;
+//     }
+//   }
 
-  if (lastPrefix == null) {
-    yate.replaceRange("@prefix " + prefixString + " .\n", {
-      line: 0,
-      ch: 0
-    });
-  } else {
-    var previousIndent = getIndentFromLine(yate, lastPrefixLine);
-    yate.replaceRange("\n" + previousIndent + "@prefix " + prefixString + " .", {
-      line: lastPrefixLine
-    });
-  }
+//   if (lastPrefix == null) {
+//     yate.replaceRange("@prefix " + prefixString + " .\n", {
+//       line: 0,
+//       ch: 0
+//     });
+//   } else {
+//     var previousIndent = getIndentFromLine(yate, lastPrefixLine);
+//     yate.replaceRange("\n" + previousIndent + "@prefix " + prefixString + " .", {
+//       line: lastPrefixLine
+//     });
+//   }
+//   yate.collapsePrefixes(false);
+
+var addPrefixAsString = function(yate, prefixString) {
+  yate.replaceRange("@prefix " + prefixString + "\n", {
+    line: 0,
+    ch: 0
+  });
+
   yate.collapsePrefixes(false);
 };
 var removePrefixes = function(yate, prefixes) {
@@ -52,7 +62,17 @@ var removePrefixes = function(yate, prefixes) {
     yate.setValue(
       yate
         .getValue()
-        .replace(new RegExp("PREFIX\\s*" + pref + ":\\s*" + escapeRegex("<" + prefixes[pref] + ">") + "\\s*", "ig"), "")
+        .replace(
+          new RegExp(
+            "PREFIX\\s*" +
+              pref +
+              ":\\s*" +
+              escapeRegex("<" + prefixes[pref] + ">") +
+              "\\s*",
+            "ig"
+          ),
+          ""
+        )
     );
   }
   yate.collapsePrefixes(false);
@@ -68,7 +88,10 @@ var getPrefixesFromDocument = function(yate) {
   //Use precise here. We want to be sure we use the most up to date state. If we're
   //not, we might get outdated prefixes from the current document (creating loops such
   //as https://github.com/OpenTriply/YASGUI/issues/84)
-  return yate.getTokenAt({ line: yate.lastLine(), ch: yate.getLine(yate.lastLine()).length }, true).state.prefixes;
+  return yate.getTokenAt(
+    { line: yate.lastLine(), ch: yate.getLine(yate.lastLine()).length },
+    true
+  ).state.prefixes;
 };
 
 /**

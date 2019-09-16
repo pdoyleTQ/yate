@@ -79,6 +79,10 @@ var extendCmInstance = function(yate) {
       if (root.Autocompleters[name]) yate.autocompleters.init(name, root.Autocompleters[name]);
     });
   }
+  yate.emit = function(event, data) {
+    root.signal(yate, event, data)
+  }
+  yate.lastQueryDuration = null;
   yate.getCompleteToken = function(token, cur) {
     return require("./tokenUtils.js").getCompleteToken(yate, token, cur);
   };
@@ -145,6 +149,61 @@ var extendCmInstance = function(yate) {
   yate.removePrefixes = function(prefixes) {
     return require("./prefixUtils.js").removePrefixes(yate, prefixes);
   };
+  yasqe.getVariablesFromQuery = function() {
+    //Use precise here. We want to be sure we use the most up to date state. If we're
+    //not, we might get outdated info from the current query (creating loops such
+    //as https://github.com/OpenTriply/YASGUI/issues/84)
+    //on caveat: this function won't work when query is invalid (i.e. when typing)
+    return $.map(yasqe.getTokenAt({ line: yasqe.lastLine(), ch: yasqe.getLine(yasqe.lastLine()).length }, true).state.variables, function(val,key) {return key});
+  }
+  //values in the form of {?var: 'value'}, or [{?var: 'value'}]
+  yasqe.getQueryWithValues = function(values) {
+    if (!values) return yasqe.getValue();
+    var injectString;
+    if (typeof values === 'string') {
+      injectString = values;
+    } else {
+      //start building inject string
+      if (!Array.isArray(values)) values = [values];
+      var variables = values.reduce(function(vars, valueObj) {
+        for (var v in valueObj) {
+          vars[v] = v;
+        }
+        return vars;
+      }, {})
+      var varArray = [];
+      for (var v in variables) {
+        varArray.push(v);
+      }
+
+      if (!varArray.length) return yasqe.getValue() ;
+      //ok, we've got enough info to start building the string now
+      injectString = "VALUES (" + varArray.join(' ') + ") {\n";
+      values.forEach(function(valueObj) {
+        injectString += "( ";
+        varArray.forEach(function(variable) {
+          injectString += valueObj[variable] || "UNDEF"
+        })
+        injectString += " )\n"
+      })
+      injectString += "}\n"
+    }
+    if (!injectString) return yasqe.getValue();
+
+    var newQuery = ""
+    var injected = false;
+    var gotSelect = false;
+    root.runMode(yasqe.getValue(), "sparql11", function(stringVal, className, row, col, state) {
+      if (className === "keyword" && stringVal.toLowerCase() === 'select') gotSelect = true;
+      newQuery += stringVal;
+      if (gotSelect && !injected && className === "punc" && stringVal === "{") {
+        injected = true;
+        //start injecting
+        newQuery += "\n" + injectString;
+      }
+    });
+    return newQuery
+  }
 
   yate.getValueWithoutComments = function() {
     var cleanedDocument = "";
@@ -312,7 +371,7 @@ var checkSyntax = function(yate, deepcheck) {
     if (state.OK == false) {
       if (!yate.options.syntaxErrorCheck) {
         //the library we use already marks everything as being an error. Overwrite this class attribute.
-        $(yate.getWrapperElement).find(".sp-error").css("color", "black");
+        $(yate.getWrapperElement()).find(".sp-error").css("color", "black");
         //we don't want to gutter error, so return
         return;
       }
@@ -548,6 +607,7 @@ root.drawButtons = function(yate) {
         .attr("title", "Set editor full screen")
         .click(function() {
           yate.setOption("fullScreen", true);
+          yate.emit('fullscreen-enter')
         })
     )
     .append(
@@ -556,6 +616,7 @@ root.drawButtons = function(yate) {
         .attr("title", "Set editor to normal size")
         .click(function() {
           yate.setOption("fullScreen", false);
+          yate.emit('fullscreen-leave')
         })
     );
   yate.buttons.append(toggleFullscreen);

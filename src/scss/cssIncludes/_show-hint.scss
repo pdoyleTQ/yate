@@ -1,6 +1,6 @@
 .CodeMirror-hints {
   position: absolute;
-  z-index: 10;
+  z-index: 1200;
   overflow: hidden;
   list-style: none;
 
@@ -19,6 +19,8 @@
 
   max-height: 20em;
   overflow-y: auto;
+
+  z-index: 1200;
 }
 
 .CodeMirror-hint {

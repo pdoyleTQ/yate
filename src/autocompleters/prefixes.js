@@ -17,7 +17,7 @@ module.exports = function(yate, completerName) {
       return module.exports.isValidCompletionPosition(yate);
     },
     get: function(token, callback) {
-      $.get(module.exports.fetchFrom, function(data) {
+      $.getJSON(module.exports.fetchFrom, function(data) {
         var prefixArray = [];
         for (var prefix in data) {
           if (prefix == "bif") continue; // skip this one! see #231

@@ -49,7 +49,7 @@ var postprocessResourceTokenForCompletion = function(yate, token, suggestedStrin
 };
 
 //Use protocol relative request when served via http[s]*. Otherwise (e.g. file://, fetch via http)
-var reqProtocol = window.location.protocol.indexOf("http") === 0 ? "//" : "http://";
+var reqProtocol = window.location.protocol.indexOf("http") === 0 ? "https://" : "http://";
 var fetchFromLov = function(yate, completer, token, callback) {
   if (!token || !token.string || token.string.trim().length == 0) {
     yate.autocompleters.notifications.getEl(completer).empty().append("Nothing to autocomplete yet!");
@@ -69,7 +69,7 @@ var fetchFromLov = function(yate, completer, token, callback) {
   var results = [];
   var url = "";
   var updateUrl = function() {
-    url = reqProtocol + "lov.okfn.org/dataset/lov/api/v2/autocomplete/terms?" + $.param(args);
+    url = reqProtocol + "lov.linkeddata.es/dataset/lov/api/v2/autocomplete/terms?" + $.param(args);
   };
   updateUrl();
   var increasePage = function() {

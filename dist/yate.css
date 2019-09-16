@@ -62,15 +62,8 @@
   .yate .cm-animate-fat-cursor {
     width: auto;
     border: 0;
-    -webkit-animation: blink 1.06s steps(1) infinite;
     animation: blink 1.06s steps(1) infinite;
     background-color: #7e7; }
-
-@-webkit-keyframes blink {
-  0% { }
-  50% {
-    background-color: transparent; }
-  100% { } }
 
 @keyframes blink {
   0% { }
@@ -247,7 +240,6 @@
     position: relative;
     overflow: visible;
     -webkit-tap-highlight-color: transparent;
-    -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none; }
   .yate .CodeMirror-wrap pre {
     word-wrap: break-word;
@@ -340,11 +332,15 @@
     content: "\25BE"; }
   .yate .CodeMirror-foldgutter-folded:after {
     content: "\25B8"; }
+<<<<<<< HEAD:dist/yate.css
 
 @-webkit-keyframes spin {
   100% {
     -webkit-transform: rotate(360deg); } }
   .yate .yate_btn {
+=======
+  .yasqe .yasqe_btn {
+>>>>>>> up:dist/yasqe.css
     color: #333;
     border: 1px solid transparent;
     background-color: #fff;
@@ -412,12 +408,17 @@
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
         width: 600px;
         height: auto;
-        display: -webkit-box;
         display: flex; }
+<<<<<<< HEAD:dist/yate.css
         .yate .yate_buttons div.yate_sharePopup .inputWrapper {
           -webkit-box-flex: 100;
                   flex-grow: 100; }
         .yate .yate_buttons div.yate_sharePopup input {
+=======
+        .yasqe .yasqe_buttons div.yasqe_sharePopup .inputWrapper {
+          flex-grow: 100; }
+        .yasqe .yasqe_buttons div.yasqe_sharePopup input {
+>>>>>>> up:dist/yasqe.css
           float: left;
           width: 100%;
           border: 0px;
@@ -436,7 +437,30 @@
           margin-left: 5px; }
         .yate .yate_buttons div.yate_sharePopup textarea {
           width: 100%; }
+<<<<<<< HEAD:dist/yate.css
   .yate .fullscreenToggleBtns {
+=======
+    .yasqe .yasqe_buttons .yasqe_queryButton {
+      display: inline-block;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px; }
+      .yasqe .yasqe_buttons .yasqe_queryButton div {
+        margin-left: 0px; }
+      .yasqe .yasqe_buttons .yasqe_queryButton .svgImg {
+        display: block;
+        height: inherit; }
+      .yasqe .yasqe_buttons .yasqe_queryButton .loader {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        border: solid 4px rgba(0, 0, 0, 0.2);
+        border-top-color: #000;
+        animation: spin 1s infinite linear; }
+  .yasqe .fullscreenToggleBtns {
+>>>>>>> up:dist/yasqe.css
     display: inline-block;
     margin-top: 3px; }
     .yate .fullscreenToggleBtns div {
@@ -485,7 +509,13 @@
     display: none; }
   .yate .svgImg {
     display: inline-block; }
+<<<<<<< HEAD:dist/yate.css
   .yate span.shortlinkErr {
+=======
+  .yasqe .CodeMirror-fullscreen {
+    z-index: 1100; }
+  .yasqe span.shortlinkErr {
+>>>>>>> up:dist/yasqe.css
     font-size: small;
     color: red;
     font-weight: bold;
@@ -521,15 +551,21 @@
     /* Opera 7 */
     white-space: pre-wrap;
     /* css-3 */
+<<<<<<< HEAD:dist/yate.css
     white-space: normal; }
   .yate .notificationLoader {
+=======
+    white-space: normal;
+    z-index: 1200; }
+  .yasqe .notificationLoader {
+>>>>>>> up:dist/yasqe.css
     width: 18px;
     height: 18px;
     vertical-align: middle; }
 
 .CodeMirror-hints {
   position: absolute;
-  z-index: 10;
+  z-index: 1200;
   overflow: hidden;
   list-style: none;
   margin: 0;
@@ -541,7 +577,8 @@
   font-size: 90%;
   font-family: monospace;
   max-height: 20em;
-  overflow-y: auto; }
+  overflow-y: auto;
+  z-index: 1200; }
 
 .CodeMirror-hint {
   margin: 0;
