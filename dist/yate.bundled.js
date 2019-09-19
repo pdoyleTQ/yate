@@ -23812,7 +23812,7 @@ module.exports = {
 module.exports={
   "name": "perfectkb-yate",
   "description": "Yet Another Turtle Editor, forked from YASQE",
-  "version": "0.9.0",
+  "version": "0.9.2",
   "main": "src/main.js",
   "license": "MIT",
   "author": "Maxime Lefrançois",
@@ -24019,10 +24019,6 @@ module.exports = function(YATE, yate) {
       return true;
     };
     for (var completerName in completers) {
-
-      if(completerName == "prefixes" ) {
-        console.log("hello");
-      }
       if ($.inArray(completerName, yate.options.autocompleters) == -1) continue; //this completer is disabled
       var completer = completers[completerName];
       if (!completer.isValidCompletionPosition) continue; //no way to check whether we are in a valid position
