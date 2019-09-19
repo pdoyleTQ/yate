@@ -46,7 +46,7 @@ var addPrefixes = function(yate, prefixes) {
 //   yate.collapsePrefixes(false);
 
 var addPrefixAsString = function(yate, prefixString) {
-  yate.replaceRange("@prefix " + prefixString + "\n", {
+  yate.replaceRange("@prefix " + prefixString + " .\n", {
     line: 0,
     ch: 0
   });
