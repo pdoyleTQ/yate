@@ -75,7 +75,8 @@ storeProperty==>[].
   blankNodePropertyList ==> ['[', predicateObjectList, ']'].
 
 %[15]
-  collection ==> ['(', *(object), ')'].
+  collection ==> ['NIL'].
+  collection ==> ['(', *(object) , ')'].
 
 %[16]
   numericLiteral ==> [or('INTEGER', 'DECIMAL', 'DOUBLE')].
