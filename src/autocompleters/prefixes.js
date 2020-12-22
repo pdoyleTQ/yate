@@ -66,7 +66,7 @@ module.exports.isValidCompletionPosition = function(yate) {
   // there should be no trailing text (otherwise, text is wrongly inserted
   // in between)
   var previousToken = yate.getPreviousNonWsToken(cur.line, token);
-  if (!previousToken || previousToken.string.toUpperCase() != "PREFIX" || previousToken.string.toUpperCase() != "@PREFIX") return false;
+  if (!previousToken || (previousToken.string.toUpperCase() != "PREFIX" && previousToken.string.toUpperCase() != "@PREFIX")) return false;
   return true;
 };
 module.exports.preprocessPrefixTokenForCompletion = function(yate, token) {
