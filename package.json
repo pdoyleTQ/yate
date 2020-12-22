@@ -1,10 +1,14 @@
 {
   "name": "perfectkb-yate",
   "description": "Yet Another Turtle Editor, forked from YASQE",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "main": "src/main.js",
   "license": "MIT",
-  "author": "Maxime Lefrançois",
+  "author": {
+      "name": "Maxime Lefrançois",
+      "email": "maxime.lefrançois@gmail.com",
+      "web": "http://maxime-lefrancois.info"
+    },
   "homepage": "https://perfectkb.github.io/yate",
   "scripts": {
     "dev": "gulp serve",
@@ -65,6 +69,13 @@
       "name": "Maxime Lefrançois",
       "email": "maxime.lefrançois@gmail.com",
       "web": "http://maxime-lefrancois.info"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Pablo Menéndez",
+      "email": "pabloyo97@hotmail.com",
+      "web": "https://mistermboy.github.io/"
     }
   ],
   "repository": {
