@@ -26,6 +26,9 @@ require("codemirror/addon/edit/matchbrackets.js");
 require("codemirror/addon/runmode/runmode.js");
 require("codemirror/addon/display/fullscreen.js");
 require("../lib/grammar/tokenizer.js");
+require('codemirror/addon/search/search.js');
+require('codemirror/addon/search/jump-to-line.js');
+require('codemirror/addon/dialog/dialog.js');
 
 /**
  * Main YATE constructor. Pass a DOM element as argument to append the editor to, and (optionally) pass along config settings (see the YATE.defaults object below, as well as the regular CodeMirror documentation, for more information on configurability)

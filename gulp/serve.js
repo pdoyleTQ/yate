@@ -4,11 +4,9 @@ var gulp = require("gulp"),
   livereload = require("gulp-livereload");
 
 gulp.task("watch", function() {
-  gulp.watch(["./src/**/*.js", "./lib/*.js", "./lib/grammar/*.js"], ["browserifyForDebug"]);
-  gulp.watch("./src/**/*.scss", ["makeCss"]);
-  gulp.watch("./*.html", function(files) {
-    gulp.src(files.path).pipe(connect.reload());
-  });
+  gulp.watch(["./src/**/*.js", "./lib/*.js", "./lib/grammar/*.js"], gulp.series("browserifyForDebug"));
+  gulp.watch("./src/**/*.scss",  gulp.series("makeCss"));
+  gulp.watch("./*.html", gulp.series("browserifyForDebug"));
 });
 
 gulp.task("connect", function() {
