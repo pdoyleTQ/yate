@@ -5,10 +5,10 @@
   "main": "src/main.js",
   "license": "MIT",
   "author": {
-      "name": "Maxime Lefrançois",
-      "email": "maxime.lefrançois@gmail.com",
-      "web": "http://maxime-lefrancois.info"
-    },
+    "name": "Maxime Lefrançois",
+    "email": "maxime.lefrançois@gmail.com",
+    "web": "http://maxime-lefrancois.info"
+  },
   "homepage": "https://perfectkb.github.io/yate",
   "scripts": {
     "dev": "gulp serve",

@@ -1,8 +1,7 @@
 
 /*
 
-SPARQL 1.1 grammar rules based on the Last Call Working Draft of 24/07/2012:
-  http://www.w3.org/TR/2012/WD-sparql11-query-20120724/#sparqlGrammar
+Turtle 1.1 grammar rules including RDF+ extension [[ ... ]] for reified triples
 
 Be careful with grammar notation - it is EBNF in prolog syntax!
 
@@ -66,7 +65,7 @@ storeProperty==>[].
   predicate ==> [iri].
 
 %[12]
-  object ==> [or(iri, blankNode, collection, blankNodePropertyList, literal)].
+  object ==> [or(iri, blankNode, collection, blankNodePropertyList, literal), ?(reification)].
 
 %[13]
   literal ==> [or(rdfLiteral, numericLiteral, booleanLiteral)].
@@ -80,6 +79,9 @@ storeProperty==>[].
 
 %[16]
   numericLiteral ==> [or('INTEGER', 'DECIMAL', 'DOUBLE')].
+  
+%[17]
+  reification ==> ['[[', predicateObjectList, ']]'].
 
 %[128s]
   rdfLiteral ==> [string, ?('LANGTAG' or ['^^',iri])].
@@ -138,6 +140,8 @@ tm_keywords([
 % e.g. DOUBLE, DECIMAL, INTEGER
 % e.g. INTEGER_POSITIVE, PLUS
 tm_punct([
+'[['= '\\[\\[',
+']]'= '\\]\\]',
 'a'= 'a',
 '.'= '\\.',
 ','= ',',
