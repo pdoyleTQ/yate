@@ -5541,7 +5541,7 @@ module.exports = {
 module.exports={
   "name": "perfectkb-yate",
   "description": "Yet Another Turtle Editor, forked from YASQE",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "main": "src/main.js",
   "license": "MIT",
   "author": {
